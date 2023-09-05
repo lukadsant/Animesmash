@@ -1,16 +1,22 @@
 import random
+import os
+import json
 
+clear = lambda: os.system('cls')
 turn = 0
 totalpoints=0
-arenaA=[]
-arenaA2=[]
-
+arenaA={}
+arenaA2={}
+bottotalpoints=0
+playertotalpoints=0
 #ao revelar
 #constante
 #sem habilidade
 #descartar
 #mover
 #destruir
+
+
 
 class Carta:
     def __init__(self,name,poder, custo,habilidade):
@@ -23,25 +29,56 @@ class Carta:
         return f"Nome {self.nome}, Poder: {self.poder}, Custo: {self.custo}, Habilidade: {self.habilidade}"
     
 
-minha_carta = Carta("Goku", 3, 3, "destroy")
-print(minha_carta.poder)
+
+# Carregue os dados do JSON
+with open('cartas.json', 'r') as file:
+    data = json.load(file)
+
+# Crie instâncias da classe Carta com base nos dados do JSON
+cartas = []
+cafe={}
+for card_data in data['cards']:
+    carta = Carta(card_data['name'], card_data['power'], card_data['cost'], card_data['effect'])
+    cartas.append(carta)
+    
+    cafe[f'{len(cartas)}']=Carta(card_data['name'], card_data['power'], card_data['cost'], card_data['effect'])
+
+# Exemplo: Imprima informações sobre as cartas
+#for carta in cartas:
+#    print(carta)
+
+chaves = list(cafe.keys())
+player_hand = random.choices(chaves)
+x=player_hand[0]
+
+player_hand = cafe[f'{1}']
+enemy_hand= cafe[f'{x}']
+
+
 
 def ability(card,player):
     
-    escolhas=['buff','debuff','destroy','clone']
+    escolhas=['buff','debuff','destroy','clone','sem habilidade']
     if player ==1:
         case=card.habilidade
     else:
-        case=random.choice(escolhas)
+        case='sem habilidade'#random.choice(escolhas)
     
-    print(f'efeito da carta: {case}')
+    print(f'efeito da carta: {case}\n')
     
     if case=='buff':
-        cardbuff=card
         if player==1:
-            arenaA[-1].poder=cardbuff.poder+3
-        else:
-            arenaA2[-1].poder=cardbuff.poder+3
+            print('playbuff')
+            #card.poder=card.poder+3
+            
+            print(arenaA[0].nome)
+                
+            #print(arenaA[chave1])
+            arenaA[0].poder=arenaA[0].poder+3
+            
+        elif player==2:
+            print('botbuff')
+            card.poder=card.poder+3
     elif case=='debuff':
         if player==1:
             enemy=arenaA2[-1].poder
@@ -66,42 +103,77 @@ def ability(card,player):
             arenaA.append(card)
         else:
             arenaA2.append(card)
+    else:
+        print('Carta sem habilidade, Nenhum efeito ativado;')
         
     
 while turn < 6:
-    print(f"Turno {turn}\n")
     
-    card=int(input('Insira seu card '))
+    card=input(f'Aperte enter para continuar o turno {turn}...')
+    clear()
+    ascii_art = '''
+                     _     _                    
+                    | |   | |                   
+     _ __   _____  _| |_  | |_ _   _ _ __ _ __  
+    | '_ \ / _ \ \/ / __| | __| | | | '__| '_ \ 
+    | | | |  __/>  <| |_  | |_| |_| | |  | | | |
+    |_| |_|\___/_/\_\\__|  \__|\__,_|_|  |_| |_|
+    '''
+
+    print(ascii_art)
+    print(f'turno {turn}')
+
+    arenaA[turn]=player_hand
+    arenaA2[turn]=enemy_hand
+
+    print("Campo do Player:")
+
+
+
+    for carta in arenaA:
+        print(arenaA[carta])
+    # Para o bot
+    print("Campo do Bot:")
+    for carta in arenaA2:
+        print(arenaA2[carta])
     
-    
-    arenaA.append(minha_carta)
-    arenaA2.append(minha_carta)
-    print(f'player: {arenaA}')
-    print(f'bot: {arenaA2}')
+    chave1 = list(arenaA.keys())[-1]
+    chave2 = list(arenaA2.keys())[-1]
+
     
     if len(arenaA) > 0:
         print('ativando efeito da carta do player....')
-        ability(arenaA[-1],1)
+        ability(arenaA[chave1],1)
     else:
-        print('player sem carta')
+        print('player está sem carta sem carta no campo, passando turno.')
     if len(arenaA2) > 0:
         print('ativando efeito da carta do bot....')
-        ability(arenaA2[-1],2)
+        ability(arenaA2[chave2],2)
     else:
-        print('bot sem carta')
+        print('O bot está sem carta no campo, passando turno.')
+        
+    print(f'\n Campo após o efeito:')
     # Para o jogador
     print("Player:")
     for carta in arenaA:
-        print(f'Nome: {carta.nome}, Poder: {carta.poder}')
+        print(arenaA[carta])
+
 
     # Para o bot
     print("Bot:")
     for carta in arenaA2:
-        print(f'Nome: {carta.nome}, Poder: {carta.poder}')
+        print(arenaA2[carta])
+
+
+    for carta_nome, carta in arenaA.items():
+        playertotalpoints += carta.poder
     
-    playertotalpoints=sum(carta.poder for carta in arenaA)
-    bottotalpoints=sum(carta.poder for carta in arenaA2)
+    for carta_nome, carta in arenaA2.items():
+        bottotalpoints += carta.poder
+
+    
     turn=turn+1
+
     
 print("Player Total points:", playertotalpoints, "Points")
 print("Bot Total points:", bottotalpoints, "Points")
