@@ -58,34 +58,28 @@ enemy_hand= cafe[f'{x}']
 
 def ability(card,player):
     
-    escolhas=['buff','debuff','destroy','clone','sem habilidade']
+    escolhas=['buff','debuff']#,'destroy','clone','sem habilidade']
     if player ==1:
         case=card.habilidade
     else:
-        case='sem habilidade'#random.choice(escolhas)
+        case=random.choice(escolhas)
     
     print(f'efeito da carta: {case}\n')
     
     if case=='buff':
         if player==1:
             print('playbuff')
-            #card.poder=card.poder+3
-            
-            print(arenaA[0].nome)
-                
-            #print(arenaA[chave1])
-            arenaA[0].poder=arenaA[0].poder+3
+            print(arenaA)
+            arenaA[chave1].poder=arenaA[chave1].poder+3
             
         elif player==2:
             print('botbuff')
-            card.poder=card.poder+3
+            arenaA2[chave2].poder=arenaA2[chave2].poder+3
     elif case=='debuff':
         if player==1:
-            enemy=arenaA2[-1].poder
-            arenaA2[-1].poder=enemy-1
+            arenaA2[chave2].poder=arenaA2[chave2].poder-1
         else:
-            enemy=arenaA[-1].poder
-            arenaA[-1].poder=enemy-1
+            arenaA[chave1].poder=arenaA[chave1].poder-1
     elif case == 'destroy':
         if player==1:
             if len(arenaA2) > 0:
@@ -123,15 +117,13 @@ while turn < 6:
     print(ascii_art)
     print(f'turno {turn}')
 
-    arenaA[turn]=player_hand
-    arenaA2[turn]=enemy_hand
+    arenaA[turn]=Carta('Monster',3,3,'buff')
+    arenaA2[turn]=Carta('EMonster',3,3,'buff')
 
     print("Campo do Player:")
-
-
-
     for carta in arenaA:
         print(arenaA[carta])
+    print('vendo arenaA: ',arenaA[0])
     # Para o bot
     print("Campo do Bot:")
     for carta in arenaA2:
@@ -164,16 +156,14 @@ while turn < 6:
     for carta in arenaA2:
         print(arenaA2[carta])
 
-
-    for carta_nome, carta in arenaA.items():
-        playertotalpoints += carta.poder
-    
-    for carta_nome, carta in arenaA2.items():
-        bottotalpoints += carta.poder
-
-    
     turn=turn+1
+    
+    
+for carta_nome, carta in arenaA.items():
+    playertotalpoints += carta.poder
 
+for carta_nome, carta in arenaA2.items():
+    bottotalpoints += carta.poder
     
 print("Player Total points:", playertotalpoints, "Points")
 print("Bot Total points:", bottotalpoints, "Points")
