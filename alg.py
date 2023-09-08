@@ -58,7 +58,7 @@ enemy_hand= cafe[f'{x}']
 
 def ability(card,player):
     
-    escolhas=['buff','debuff']#,'destroy','clone','sem habilidade']
+    escolhas=['buff','debuff','destroy','clone','sem habilidade']
     if player ==1:
         case=card.habilidade
     else:
@@ -83,20 +83,35 @@ def ability(card,player):
     elif case == 'destroy':
         if player==1:
             if len(arenaA2) > 0:
-                arenaA2.pop()
+
+                ultimo_item_removido = arenaA2.popitem()
+                # O valor removido é retornado como uma tupla (chave, valor)
+                chave, valor = ultimo_item_removido
+
+                print(f"Último item removido - Chave: {chave}, Valor: {valor}")
             else:
                 print("A lista arenaA2 está vazia. Não é possível fazer o pop.")
         else:
             if len(arenaA) > 0:
-                arenaA.pop()
+
+                ultimo_item_removido = arenaA.popitem()
+                                # O valor removido é retornado como uma tupla (chave, valor)
+                chave, valor = ultimo_item_removido
+
+                print(f"Último item removido - Chave: {chave}, Valor: {valor}")
             else:
                 print("A lista arenaA está vazia. Não é possível fazer o pop.")
             
+            
     elif case == 'clone':
         if player==1:
-            arenaA.append(card)
+            chavex = list(arenaA.keys())[-1]
+            arenaA[chavex+1] = card
+            #arenaA.append(card)
         else:
-            arenaA2.append(card)
+            chavez = list(arenaA2.keys())[-1]
+            arenaA2[chavez+1] = card
+            #arenaA2.append(card)
     else:
         print('Carta sem habilidade, Nenhum efeito ativado;')
         
@@ -123,7 +138,7 @@ while turn < 6:
     print("Campo do Player:")
     for carta in arenaA:
         print(arenaA[carta])
-    print('vendo arenaA: ',arenaA[0])
+
     # Para o bot
     print("Campo do Bot:")
     for carta in arenaA2:
