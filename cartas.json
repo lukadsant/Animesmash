@@ -1,24 +1,46 @@
 {
-    "cards": [
-      {
-        "name": "Goku",
-        "power": 3,
-        "cost": 3,
-        "effect": "buff"
-      },
-      {
-        "name": "Vegeta",
-        "power": 4,
-        "cost": 2,
-        "effect": "buff"
-      },
-      {
-        "name": "Kurinrin",
-        "power": 2,
-        "cost": 2,
-        "effect": "sem habilidade"
-      }
-
-    ]
-  }
-  
+  "cards": [
+    {
+      "name": "Goku",
+      "power": 3,
+      "cost": 3,
+      "effect": "buff"
+    },
+    {
+      "name": "Vegeta",
+      "power": 4,
+      "cost": 2,
+      "effect": "buff"
+    },
+    {
+      "name": "Kurinrin",
+      "power": 2,
+      "cost": 2,
+      "effect": "destroy"
+    },
+    {
+      "name": "Bulma",
+      "power": 2,
+      "cost": 2,
+      "effect": "sem habilidade"
+    },
+    {
+      "name": "Yancha",
+      "power": 2,
+      "cost": 2,
+      "effect": "sem habilidade"
+    },
+    {
+      "name": "Oolong",
+      "power": 2,
+      "cost": 2,
+      "effect": "clone"
+    },
+    {
+      "name": "Puao",
+      "power": 2,
+      "cost": 2,
+      "effect": "sem habilidade"
+    }
+  ]
+}

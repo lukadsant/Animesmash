@@ -43,18 +43,6 @@ for card_data in data['cards']:
     
     cafe[f'{len(cartas)}']=Carta(card_data['name'], card_data['power'], card_data['cost'], card_data['effect'])
 
-# Exemplo: Imprima informações sobre as cartas
-#for carta in cartas:
-#    print(carta)
-
-chaves = list(cafe.keys())
-player_hand = random.choices(chaves)
-x=player_hand[0]
-
-player_hand = cafe[f'{1}']
-enemy_hand= cafe[f'{x}']
-
-
 
 def ability(card,player):
     
@@ -62,7 +50,7 @@ def ability(card,player):
     if player ==1:
         case=card.habilidade
     else:
-        case=random.choice(escolhas)
+        case=card.habilidade#random.choice(escolhas)
     
     print(f'efeito da carta: {case}\n')
     
@@ -85,7 +73,6 @@ def ability(card,player):
             if len(arenaA2) > 0:
 
                 ultimo_item_removido = arenaA2.popitem()
-                # O valor removido é retornado como uma tupla (chave, valor)
                 chave, valor = ultimo_item_removido
 
                 print(f"Último item removido - Chave: {chave}, Valor: {valor}")
@@ -95,7 +82,6 @@ def ability(card,player):
             if len(arenaA) > 0:
 
                 ultimo_item_removido = arenaA.popitem()
-                                # O valor removido é retornado como uma tupla (chave, valor)
                 chave, valor = ultimo_item_removido
 
                 print(f"Último item removido - Chave: {chave}, Valor: {valor}")
@@ -107,16 +93,18 @@ def ability(card,player):
         if player==1:
             chavex = list(arenaA.keys())[-1]
             arenaA[chavex+1] = card
-            #arenaA.append(card)
         else:
             chavez = list(arenaA2.keys())[-1]
             arenaA2[chavez+1] = card
-            #arenaA2.append(card)
     else:
         print('Carta sem habilidade, Nenhum efeito ativado;')
         
     
 while turn < 6:
+    index_das_cartas = list(cafe.keys()) 
+    id_da_carta_sorteada = random.choices(index_das_cartas)
+    Carta_sorteada= cafe[f'{id_da_carta_sorteada[0]}']
+
     
     card=input(f'Aperte enter para continuar o turno {turn}...')
     clear()
@@ -133,7 +121,7 @@ while turn < 6:
     print(f'turno {turn}')
 
     arenaA[turn]=Carta('Monster',3,3,'buff')
-    arenaA2[turn]=Carta('EMonster',3,3,'buff')
+    arenaA2[turn]=Carta_sorteada
 
     print("Campo do Player:")
     for carta in arenaA:
