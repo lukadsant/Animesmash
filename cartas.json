@@ -40,7 +40,7 @@
       "name": "Puao",
       "power": 2,
       "cost": 2,
-      "effect": "sem habilidade"
+      "effect": "debuff"
     }
   ]
 }

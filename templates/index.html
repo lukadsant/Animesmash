@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meu Jogo</title>
+</head>
+<body>
+    <h1>Turno {{ turno }}</h1>
+    {%for carta in playercard%}
+        <ul>
+            <li>{{playercard[carta]}}</li>
+        </ul>
+    {%endfor%}
+    vs
+    {%for carta in botcard%}
+    <ul>
+        <li>{{botcard[carta]}}</li>
+    </ul>
+{%endfor%}
+    <form  id="skill-form" action="/skill_turn" method="post">
+        <button type="submit" id="skill-button">Ativar Habilidade</button>
+    </form>
+    <form id="next-turn-form" action="/novo_turno" method="post">
+        <button type="submit">Próximo Turno</button>
+    </form>
+</body>
+</html>
