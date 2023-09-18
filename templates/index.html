@@ -16,11 +16,16 @@
         <li>{{botcard[carta]}}</li>
     </ul>
 {%endfor%}
-    <form  id="skill-form" action="/skill_turn" method="post">
-        <button type="submit" id="skill-button">Ativar Habilidade</button>
-    </form>
-    <form id="next-turn-form" action="/novo_turno" method="post">
-        <button type="submit">Próximo Turno</button>
-    </form>
+
+    {%if isSKILLTIME ==True%}
+        <form  id="skill-form" action="/skill_turn" method="post">
+            <button type="submit" id="skill-button">Ativar Habilidade</button>
+        </form>
+    {% endif %}
+    {%if isSKILLTIME ==False%}
+        <form id="next-turn-form" action="/novo_turno" method="post">
+            <button type="submit">Próximo Turno</button>
+        </form>
+    {% endif %}
 </body>
 </html>

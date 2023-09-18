@@ -20,7 +20,8 @@ class Carta:
 turno = 0
 arenaA = {}
 arenaA2 = {}
-
+# Defina uma variável de controle fora da função para alternar o comportamento.
+isSKILLTIME = False
 def carregar_cartas():
     with open('cartas.json', 'r') as file:
         data = json.load(file)
@@ -99,16 +100,26 @@ def ativar_habilidade():
 @app.route('/')
 def index():
     print(turno,arenaA,arenaA2)
-    return render_template('index.html', turno=turno,playercard=arenaA,botcard=arenaA2)
+    return render_template('index.html', turno=turno,playercard=arenaA,botcard=arenaA2,isSKILLTIME=isSKILLTIME)
 
 @app.route('/novo_turno', methods=['POST'])
 def proximo_turno():
-    novo_turno()
+    global isSKILLTIME  # Use a variável global para que ela possa ser modificada.
+    
+    if isSKILLTIME==False:
+        novo_turno()
+        isSKILLTIME = True
     return redirect(url_for('index'))
 
 @app.route('/skill_turn', methods=['POST'])
 def ativar_turno():
-    ativar_habilidade()
+    global isSKILLTIME  # Use a variável global para que ela possa ser modificada.
+    
+    if isSKILLTIME==True:
+        ativar_habilidade()
+        isSKILLTIME = False  # Inverte o valor da variável para alternar o comportamento.
+    
+
     return redirect(url_for('index'))
 if __name__ == '__main__':
     app.run(debug=True)
