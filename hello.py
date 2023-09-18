@@ -42,6 +42,7 @@ def aplicar_habilidade(carta, player,chave1,chave2):
         arena = arenaA2
         arenaenemy = arenaA
 
+    print('carta com habiidade: ',carta)
     print(f'efeito da carta: {carta.habilidade}\n')
 
     if carta.habilidade == 'buff':
@@ -68,11 +69,45 @@ def imprimir_arena(arena):
 
 # Carregue as cartas do JSON
 cartas = carregar_cartas()
+enemydeck=[]
+enemyhand=[]
+#def gerardeck():
+#    for x in range(9):
+#        enemydeck.append(random.choice(cartas))
+    
+def gerardeck():
+    # Certifique-se de que você tem pelo menos 9 cartas disponíveis em 'cartas'.
+    for x in cartas:
+        print(x)
+    if len(cartas) < 9:
+        raise ValueError("Não há cartas suficientes para criar um deck.")
 
+    # Use random.sample() para selecionar 9 cartas sem repetição.
+    enemydeck.append(random.sample(cartas, 9))
+    print('olha pnc: ')
+    for x in enemydeck[0]:
+        print(x)
+
+
+gerardeck()
+
+def decktohand():
+    cardselected=random.choice(range(len(enemydeck[0])))
+    carta_selecionada=enemydeck[0].pop(cardselected)
+    enemyhand.append(carta_selecionada)
+    print(f'cartas restantes: {len(enemydeck[0])}')
+    print(f'!!!!!!!!xxxxxxxxxxxxxxxxxxx!!!!!!!!!!!!!: {enemyhand}')
+    print(f'cartas restantes: {len(enemydeck[0])}')
 def novo_turno():
     global turno
     turno += 1
-    carta_sorteada = random.choice(cartas)
+    decktohand()
+
+    x_sorteada =random.choice(range(len(enemyhand))) #random.choice(cartas)
+    carta_sorteada =enemyhand.pop(x_sorteada)
+    #carta_sorteada =random.choice(enemyhand) #random.choice(cartas)
+    print(carta_sorteada)
+    print('carta sorteada: ',carta_sorteada)
     arenaA[turno] = Carta('Monster', 3, 3, 'buff')
     arenaA2[turno] = carta_sorteada
     

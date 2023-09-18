@@ -28,13 +28,31 @@
       "name": "Yancha",
       "power": 2,
       "cost": 2,
-      "effect": "sem habilidade"
+      "effect": "buff"
     },
     {
       "name": "Oolong",
       "power": 2,
       "cost": 2,
       "effect": "clone"
+    },
+    {
+      "name": "Naruto",
+      "power": 2,
+      "cost": 2,
+      "effect": "clone"
+    },
+    {
+      "name": "Piccolo",
+      "power": 2,
+      "cost": 2,
+      "effect": "buff"
+    },
+    {
+      "name": "chichi",
+      "power": 2,
+      "cost": 2,
+      "effect": "debuff"
     },
     {
       "name": "Puao",
